@@ -90,9 +90,21 @@ def depthFirstSearch(problem):
     '''
         INSÉREZ VOTRE SOLUTION À LA QUESTION 1 ICI
     '''
+    visited = []
+    stack = util.Stack()
+    stack.push((problem.getStartState(), []))
+    while not stack.isEmpty():
+        state, moves = stack.pop()
+        visited.append(state)
 
-    util.raiseNotDefined()
 
+        if problem.isGoalState(state):
+            return moves
+
+        next_states = problem.getSuccessors(state)
+
+        for ns in filter(lambda x: x[0] not in visited, next_states):
+            stack.push((ns[0], moves + [ns[1]]))
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
@@ -102,7 +114,21 @@ def breadthFirstSearch(problem):
         INSÉREZ VOTRE SOLUTION À LA QUESTION 2 ICI
     '''
 
-    util.raiseNotDefined()
+    visited = []
+    queue = util.Queue()
+    queue.push((problem.getStartState(), []))
+    while not queue.isEmpty():
+        state, moves = queue.pop()
+        visited.append(state)
+
+        if problem.isGoalState(state):
+            return moves
+
+        next_states = problem.getSuccessors(state)
+
+        for ns in filter(lambda x: x[0] not in visited, next_states):
+            queue.push((ns[0], moves + [ns[1]]))
+
 
 def uniformCostSearch(problem):
     """Search the node of least total cost first."""
@@ -126,6 +152,20 @@ def aStarSearch(problem, heuristic=nullHeuristic):
     '''
         INSÉREZ VOTRE SOLUTION À LA QUESTION 4 ICI
     '''
+    visited = []
+    queue = util.PriorityQueue()
+    queue.push((problem.getStartState(), []), 0)
+    while not queue.isEmpty():
+        state, moves = queue.pop()
+        visited.append(state)
+
+        if problem.isGoalState(state):
+            return moves
+
+        next_states = problem.getSuccessors(state)
+
+        for ns in filter(lambda x: x[0] not in visited, next_states):
+            queue.push((ns[0], moves + [ns[1]]), heuristic(state, problem))
 
     util.raiseNotDefined()
 
