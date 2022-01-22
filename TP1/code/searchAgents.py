@@ -309,7 +309,7 @@ class CornersProblem(search.SearchProblem):
             INSÉREZ VOTRE SOLUTION À LA QUESTION 5 ICI
         '''
 
-        return self.startingPosition, 0
+        return self.startingPosition, [0, 0, 0, 0]
 
     def isGoalState(self, state):
         """
@@ -320,7 +320,7 @@ class CornersProblem(search.SearchProblem):
             INSÉREZ VOTRE SOLUTION À LA QUESTION 5 ICI
         '''
 
-        return state[1] == 15
+        return sum(state[1]) == 4
 
     def getSuccessors(self, state):
         """
@@ -340,11 +340,14 @@ class CornersProblem(search.SearchProblem):
                 INSÉREZ VOTRE SOLUTION À LA QUESTION 5 ICI
             '''
             (x, y), eaten = state
+            eaten = eaten.copy()
+
             dx, dy = Actions.directionToVector(action)
             nextx, nexty = int(x + dx), int(y + dy)
             hitsWall = self.walls[nextx][nexty]
+
             if (nextx, nexty) in self.corners:
-                eaten = eaten | (1 << self.corners.index((nextx, nexty)))
+                eaten[self.corners.index((nextx, nexty))] = 1
             if not hitsWall:
                 successors.append((((nextx, nexty), eaten), action, 1))
 
@@ -384,15 +387,15 @@ def cornersHeuristic(state, problem):
         INSÉREZ VOTRE SOLUTION À LA QUESTION 6 ICI
     '''
 
-    return(max(
+    return max(
         map(
             lambda x: util.manhattanDistance(state[0], x[0]),
             filter(
-                lambda v: v[1] != '1',
-                zip(corners, format(state[1], 'b'))
+                lambda v: v[1] == 0,
+                zip(corners, state[1])
             )
         ), default=0
-    ))
+    )
 
 
 class AStarCornersAgent(SearchAgent):
@@ -491,6 +494,9 @@ def foodHeuristic(state, problem: FoodSearchProblem):
         INSÉREZ VOTRE SOLUTION À LA QUESTION 7 ICI
     '''
 
-
-    return 0
-
+    return max(
+        map(
+            lambda x: util.nearestPoint(state[0], x),
+            foodGrid.asList()
+        ), default=0
+    )
