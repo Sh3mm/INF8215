@@ -491,6 +491,9 @@ def foodHeuristic(state, problem: FoodSearchProblem):
         INSÉREZ VOTRE SOLUTION À LA QUESTION 7 ICI
     '''
 
-
-    return 0
-
+    return max(
+        map(
+            lambda x: util.nearestPoint(state[0], x),
+            foodGrid.asList()
+        ), default=0
+    )
