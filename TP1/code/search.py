@@ -95,15 +95,16 @@ def depthFirstSearch(problem):
     stack.push((problem.getStartState(), []))
     while not stack.isEmpty():
         state, moves = stack.pop()
-        visited.append(state)
+        if state in visited: continue
 
+        visited.append(state)
 
         if problem.isGoalState(state):
             return moves
 
         next_states = problem.getSuccessors(state)
 
-        for ns in filter(lambda x: x[0] not in visited, next_states):
+        for ns in next_states:
             stack.push((ns[0], moves + [ns[1]]))
 
 def breadthFirstSearch(problem):
@@ -119,6 +120,8 @@ def breadthFirstSearch(problem):
     queue.push((problem.getStartState(), []))
     while not queue.isEmpty():
         state, moves = queue.pop()
+        if state in visited: continue
+
         visited.append(state)
 
         if problem.isGoalState(state):
@@ -126,7 +129,7 @@ def breadthFirstSearch(problem):
 
         next_states = problem.getSuccessors(state)
 
-        for ns in filter(lambda x: x[0] not in visited, next_states):
+        for ns in next_states:
             queue.push((ns[0], moves + [ns[1]]))
 
 
@@ -154,9 +157,12 @@ def aStarSearch(problem, heuristic=nullHeuristic):
     '''
     visited = []
     queue = util.PriorityQueue()
-    queue.push((problem.getStartState(), []), 0)
+    init_state = problem.getStartState()
+    queue.push((init_state, []), 0)
     while not queue.isEmpty():
         state, moves = queue.pop()
+        if state in visited: continue
+
         visited.append(state)
 
         if problem.isGoalState(state):
@@ -164,10 +170,11 @@ def aStarSearch(problem, heuristic=nullHeuristic):
 
         next_states = problem.getSuccessors(state)
 
-        for ns in filter(lambda x: x[0] not in visited, next_states):
-            queue.push((ns[0], moves + [ns[1]]), heuristic(state, problem))
-
-    util.raiseNotDefined()
+        for ns in next_states:
+            queue.push(
+                (ns[0], moves + [ns[1]]),
+                problem.getCostOfActions(moves + [ns[1]]) + heuristic(ns[0], problem)
+            )
 
 
 # Abbreviations

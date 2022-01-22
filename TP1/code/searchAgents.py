@@ -305,8 +305,8 @@ class CornersProblem(search.SearchProblem):
         '''
             INSÉREZ VOTRE SOLUTION À LA QUESTION 5 ICI
         '''
-        
-        util.raiseNotDefined()
+
+        return self.startingPosition, 0
 
     def isGoalState(self, state):
         """
@@ -317,7 +317,7 @@ class CornersProblem(search.SearchProblem):
             INSÉREZ VOTRE SOLUTION À LA QUESTION 5 ICI
         '''
 
-        util.raiseNotDefined()
+        return state[1] == 15
 
     def getSuccessors(self, state):
         """
@@ -329,20 +329,21 @@ class CornersProblem(search.SearchProblem):
             state, 'action' is the action required to get there, and 'stepCost'
             is the incremental cost of expanding to that successor
         """
-
         successors = []
         for action in [Directions.NORTH, Directions.SOUTH, Directions.EAST, Directions.WEST]:
             # Add a successor state to the successor list if the action is legal
             # Here's a code snippet for figuring out whether a new position hits a wall:
-            #   x,y = currentPosition
-            #   dx, dy = Actions.directionToVector(action)
-            #   nextx, nexty = int(x + dx), int(y + dy)
-            #   hitsWall = self.walls[nextx][nexty]
-           
             '''
                 INSÉREZ VOTRE SOLUTION À LA QUESTION 5 ICI
             '''
-
+            (x, y), eaten = state
+            dx, dy = Actions.directionToVector(action)
+            nextx, nexty = int(x + dx), int(y + dy)
+            hitsWall = self.walls[nextx][nexty]
+            if (nextx, nexty) in self.corners:
+                eaten = eaten | (1 << self.corners.index((nextx, nexty)))
+            if not hitsWall:
+                successors.append((((nextx, nexty), eaten), action, 1))
 
         self._expanded += 1 # DO NOT CHANGE
         return successors
@@ -379,8 +380,17 @@ def cornersHeuristic(state, problem):
     '''
         INSÉREZ VOTRE SOLUTION À LA QUESTION 6 ICI
     '''
-    
-    return 0
+
+    return(max(
+        map(
+            lambda x: util.manhattanDistance(state[0], x[0]),
+            filter(
+                lambda v: v[1] != '1',
+                zip(corners, format(state[1], 'b'))
+            )
+        ), default=0
+    ))
+
 
 class AStarCornersAgent(SearchAgent):
     "A SearchAgent for FoodSearchProblem using A* and your foodHeuristic"
