@@ -489,11 +489,10 @@ def foodHeuristic(state, problem: FoodSearchProblem):
     problem.heuristicInfo['wallCount']
     """
     position, foodGrid = state
-    food_pos = foodGrid.asList()
     '''
         INSÉREZ VOTRE SOLUTION À LA QUESTION 7 ICI
     '''
-    # todo calcultate actual distance...
+    food_pos = foodGrid.asList()
 
     problems = [PositionSearchProblem(
         problem.startingGameState,
@@ -503,15 +502,4 @@ def foodHeuristic(state, problem: FoodSearchProblem):
         visualize=False
     ) for food in food_pos]
 
-    dis = [len(search.aStarSearch(prob)) for prob in problems]
-    print(dis)
-
-    # return util.manhattanDistance(position, mean)
-    return max(
-        dis,
-        #map(
-        #    lambda x: util.manhattanDistance(position, x),
-        #    foodGrid.asList()
-        #),
-        default=0
-    )
+    return max([len(search.breadthFirstSearch(prob)) for prob in problems], default=0)
