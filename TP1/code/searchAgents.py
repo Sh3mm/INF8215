@@ -12,7 +12,7 @@
 # Pieter Abbeel (pabbeel@cs.berkeley.edu).
 # ---------
 # Rachel MEYER - 1903149
-# Antoine ROBILLARD - TODO
+# Antoine ROBILLARD - 1899718
 
 
 """
@@ -489,14 +489,29 @@ def foodHeuristic(state, problem: FoodSearchProblem):
     problem.heuristicInfo['wallCount']
     """
     position, foodGrid = state
-
+    food_pos = foodGrid.asList()
     '''
         INSÉREZ VOTRE SOLUTION À LA QUESTION 7 ICI
     '''
+    # todo calcultate actual distance...
 
-    return 0 #max(
+    problems = [PositionSearchProblem(
+        problem.startingGameState,
+        start=state[0],
+        goal=food,
+        warn=False,
+        visualize=False
+    ) for food in food_pos]
+
+    dis = [len(search.aStarSearch(prob)) for prob in problems]
+    print(dis)
+
+    # return util.manhattanDistance(position, mean)
+    return max(
+        dis,
         #map(
         #    lambda x: util.manhattanDistance(position, x),
         #    foodGrid.asList()
-        #), default=0
-    #)
+        #),
+        default=0
+    )
