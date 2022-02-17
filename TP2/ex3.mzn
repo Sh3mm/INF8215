@@ -9,11 +9,14 @@ int: S;%nombre de sous-traitants
 int: N;%nombre de tâches
 int: T;%horizon temporel, en jours
 
-% array[<A COMPLETER>] of var <A COMPLETER>: x;
+array[1..N] of var 1..S: attribution;
+constraint forall(i in 2..N)(attribution[i] != attribution[1]);
+constraint forall(i in 3..N)(attribution[i] != attribution[2]);
 
 % var int: C = <A COMPLETER>;
 
 % <A COMPLETER>
+%solve minimize C;
 
 output [
   "x: ", show(x), "\n",

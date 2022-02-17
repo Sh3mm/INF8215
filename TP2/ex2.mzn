@@ -26,7 +26,29 @@ array[1..n] of var 1..n: F = [Emilie, Juliette, Maria, Elisabeth, Manon];
 
 array[1..n] of var 0..100: married;
 
-% <A COMPLETER>
+% Juliette n’est pas mariée depuis aussi longtemps que Charles ou les Tremblays, mais depuis plus longtemps que David ou les Duponts.
+constraint married[Juliette] < married[Charles];
+constraint married[Juliette] < married[Tremblay];
+constraint married[Juliette] > married[David];
+constraint married[Juliette] > married[Dupont];
+% Élisabeth est mariée depuis deux fois plus longtemps que les Durands, mais deux fois moins longtemps que Rémy.
+constraint married[Elisabeth] == 2 * married[Durand];
+constraint married[Elisabeth] * 2 == married[Remy];
+% Les Petits sont mariés depuis 10 ans de plus que Pierre et 10 ans de moins que Maria.
+constraint married[Petit] == married[Pierre] + 10;
+constraint married[Petit] == married[Maria] - 10;
+% David et Manon sont mariés depuis 25 ans demoins que les Gagnons qui, mariés depuis 30 ans, sont le couple marié depuis le plus longtemps.
+constraint David == Manon;
+constraint married[David] == married[Gagnon] - 25;
+constraint married[Gagnon] == 30;
+constraint max(married) == married[Gagnon];
+% Ni Émilie ni les Duponts ont été mariés depuis le moins longtemps.
+constraint married[Emilie] != min(married);
+constraint married[Dupont] != min(married);
+% Édouard est marié depuis 25 ans.
+constraint married[Edouard] == 25;
+
+solve satisfy;
 
 output [
   "M: ", show(M), "\n",
