@@ -14,3 +14,5 @@ solve minimize x[5];
 output [
   show(x)
 ];
+
+% [17, 14, 12, 10, 27]

@@ -56,3 +56,7 @@ output [
   "married : ", show(married), "\n",
 ]
 ;
+
+% M: [3, 1, 2, 1, 2]
+% F: [1, 5, 2, 3, 1]
+% married : [5, 25, 0, 30, 15]
