@@ -2,21 +2,24 @@
 
 include "globals.mzn";
 
-array[1..N,1..S] of int: cost;%cout d'une tache dependamment du sous-traitant
-array[1..N,1..S] of int: duration;%duree d'une tache dependamment du sous-traitant, en jours
+array[1..N,1..S] of int: cost; % cout d'une tache dependamment du sous-traitant
+array[1..N,1..S] of int: duration; % duree d'une tache dependamment du sous-traitant, en jours
 
-int: S;%nombre de sous-traitants
-int: N;%nombre de tâches
-int: T;%horizon temporel, en jours
+int: S; % nombre de sous-traitants
+int: N; % nombre de tâches
+int: T; % horizon temporel, en jours
 
-array[1..N] of var 1..S: attribution;
-constraint forall(i in 2..N)(attribution[i] != attribution[1]);
-constraint forall(i in 3..N)(attribution[i] != attribution[2]);
+array[1..N] of var 1..S: x;
 
-% var int: C = <A COMPLETER>;
+constraint forall(i in 2..N)(x[i] != x[1]);
+constraint forall(i in 3..N)(x[i] != x[2]);
 
-% <A COMPLETER>
-%solve minimize C;
+constraint forall(i in 1..S)(T >= sum(j in 1..N where x[j] == i)(duration[j, i]));
+
+var int: C = sum(i in 1..N)(cost[i, x[i]]);
+
+
+solve minimize C;
 
 output [
   "x: ", show(x), "\n",
