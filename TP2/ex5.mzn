@@ -1,3 +1,6 @@
+% Antoine ROBILLARD (1899718)
+% Rachel MEYER (1903149)
+
 %-4p Quoridor tournament-
 
 include "globals.mzn";
@@ -48,6 +51,7 @@ output
   | i in 1..T
 ]
 
+% -Réponse-
 %   Site 1            Site 2
 
 %[1,  3,  5,  6 ]  [2,  7,  9,  12]

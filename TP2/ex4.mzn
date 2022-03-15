@@ -1,3 +1,6 @@
+% Antoine ROBILLARD (1899718)
+% Rachel MEYER (1903149)
+
 %-2p Quoridor tournament-
 
 include "globals.mzn";
@@ -14,7 +17,6 @@ array[1..MAX_T,1..G,1..2] of var 0..P: x;
 array[1..P, 1..MAX_T] of var 0..G: tables;
 array[1..P, 1..P] of var int: againsts;
 
-% <A COMPLETER>
 % minimum (nCr / G où n = P et r = 2) = 26 parties max 30
 var int: fac_P; constraint factorial(P, fac_P);
 var int: fac_2; constraint factorial(2, fac_2);
@@ -59,6 +61,7 @@ output
 
 ]
 
+% -Réponse-
 % Schedule (26 time slots) 
 
 % [1,  2 ]	[6,  9 ]	[7,  12]
@@ -69,7 +72,7 @@ output
 % [5,  6 ]	[3,  12]	[2,  4 ]
 % [1,  6 ]	[7,  8 ]	[11, 12]
 % [1,  7 ]	[3,  4 ]	[2,  5 ]
-% [10, 12]  [9,  13]	[6,  8 ]
+% [10, 12] [9,  13]	[6,  8 ]
 % [1,  8 ]	[2,  3 ]	[10, 11]
 % [1,  9 ]	[11, 13]	[5,  7 ]
 % [8,  9 ]	[2,  10]	[6,  12]

@@ -1,3 +1,6 @@
+% Antoine ROBILLARD (1899718)
+% Rachel MEYER (1903149)
+
 predicate factorial(int: n, var int: res) =
    let {
       array[1..n] of var int: x
