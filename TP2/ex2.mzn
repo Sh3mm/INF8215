@@ -1,4 +1,7 @@
-%-Enigme des mariages-
+% Antoine ROBILLARD (1899718)
+% Rachel MEYER (1903149)
+
+%-Énigme des mariages-
 
 include "globals.mzn"; 
 
@@ -57,6 +60,7 @@ output [
 ]
 ;
 
+% -Réponse-
 % M: [3, 1, 2, 1, 2]
 % F: [1, 5, 2, 3, 1]
 % married : [5, 25, 0, 30, 15]

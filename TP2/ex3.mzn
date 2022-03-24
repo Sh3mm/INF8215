@@ -1,3 +1,6 @@
+% Antoine ROBILLARD (1899718)
+% Rachel MEYER (1903149)
+
 %-Attribution de taches-
 
 include "globals.mzn";
@@ -26,5 +29,6 @@ output [
   "Cost: ", show(C)]
 ;
 
+% -Réponse-
 % x: [10, 7, 6, 3, 3, 2, 9, 4, 6, 5, 5, 8, 3, 5, 4, 1, 1, 9, 2, 8, 8, 6, 4, 1, 2]
 % Cost: 2304

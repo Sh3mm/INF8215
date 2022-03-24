@@ -1,4 +1,7 @@
-%-Carres-
+% Antoine ROBILLARD (1899718)
+% Rachel MEYER (1903149)
+
+%-Carrés-
 
 include "globals.mzn";
 
@@ -15,4 +18,5 @@ output [
   show(x)
 ];
 
+% -Réponse-
 % [17, 14, 12, 10, 27]
